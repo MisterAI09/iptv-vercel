@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPTV Vercel - الدخول</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #7c3aed;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --success: #10b981;
+            --danger: #ef4444;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, #1e293b 100%);
+            color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .login-container {
+            width: 100%;
+            max-width: 450px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .login-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        .title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .subtitle {
+            color: var(--gray);
+            font-size: 14px;
+        }
+        
+        .server-presets {
+            margin-bottom: 30px;
+        }
+        
+        .preset-title {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .preset-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .preset-btn {
+            flex: 1;
+            min-width: 120px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--light);
+            font-family: 'Cairo';
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .preset-btn:hover {
+            background: rgba(37, 99, 235, 0.2);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        .preset-btn.ottv {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+        
+        .preset-btn.ottv:hover {
+            background: rgba(239, 68, 68, 0.2);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--light);
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--light);
+            font-family: 'Cairo';
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        .form-input::placeholder {
+            color: var(--gray);
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Cairo';
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .login-btn:hover {
+            background: linear-gradient(90deg, var(--primary-dark), var(--primary));
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+        }
+        
+        .login-btn:active {
+            transform: translateY(0);
+        }
+        
+        .message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 14px;
+            display: none;
+        }
+        
+        .message.success {
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--success);
+        }
+        
+        .message.error {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: var(--danger);
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: var(--gray);
+            font-size: 13px;
+        }
+        
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .api-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--gray);
+            margin-top: 15px;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--success);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 30px 20px;
+            }
+            
+            .title {
+                font-size: 24px;
+            }
+            
+            .preset-buttons {
+                flex-direction: column;
+            }
+            
+            .preset-btn {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="header">
+                <div class="logo">📡</div>
+                <h1 class="title">IPTV على Vercel</h1>
+                <p class="subtitle">نظام البث المباشر المتكامل</p>
+            </div>
+            
+            <div class="server-presets">
+                <div class="preset-title">
+                    <span>⚡ سيرفرات سريعة</span>
+                </div>
+                <div class="preset-buttons">
+                    <button class="preset-btn ottv" onclick="loadOTTV()">
+                        OTTV.Pro
+                    </button>
+                    <button class="preset-btn" onclick="loadFreeServer()">
+                        سيرفر مجاني
+                    </button>
+                    <button class="preset-btn" onclick="loadDemo()">
+                        تجريبي
+                    </button>
+                </div>
+            </div>
+            
+            <div class="message" id="message"></div>
+            
+            <div class="form-group">
+                <label class="form-label">رابط M3U:</label>
+                <input type="text" class="form-input" id="serverUrl" 
+                       placeholder="https://example.com/playlist.m3u">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">اسم المستخدم (اختياري):</label>
+                <input type="text" class="form-input" id="username" 
+                       placeholder="username">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">كلمة المرور (اختياري):</label>
+                <input type="password" class="form-input" id="password" 
+                       placeholder="password">
+            </div>
+            
+            <button class="login-btn" onclick="connectToServer()">
+                <span>🚀 اتصال وتشغيل</span>
+            </button>
+            
+            <div class="footer">
+                <p>مشغل IPTV يعمل على Vercel</p>
+                <p>للأغراض التعليمية فقط</p>
+                <div class="api-status">
+                    <div class="status-dot"></div>
+                    <span>API Status: Online</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // تحميل سيرفر OTTV.Pro
+        function loadOTTV() {
+            document.getElementById('serverUrl').value = 'http://fr.ottv.pro';
+            document.getElementById('username').value = '4476647188407159';
+            document.getElementById('password').value = '4476647188407159';
+            showMessage('تم تحميل بيانات OTTV.Pro', 'success');
+        }
+        
+        // تحميل سيرفر مجاني
+        function loadFreeServer() {
+            document.getElementById('serverUrl').value = 'https://raw.githubusercontent.com/iptv-org/iptv/master/streams/ar.m3u';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            showMessage('تم تحميل سيرفر IPTV.org المجاني', 'success');
+        }
+        
+        // تحميل سيرفر تجريبي
+        function loadDemo() {
+            document.getElementById('serverUrl').value = 'https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            showMessage('تم تحميل سيرفر تجريبي', 'success');
+        }
+        
+        // الاتصال بالسيرفر
+        async function connectToServer() {
+            const serverUrl = document.getElementById('serverUrl').value.trim();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            
+            if (!serverUrl) {
+                showMessage('الرجاء إدخال رابط السيرفر', 'error');
+                return;
+            }
+            
+            // التحقق من صحة الرابط
+            if (!isValidUrl(serverUrl)) {
+                showMessage('الرجاء إدخال رابط صحيح', 'error');
+                return;
+            }
+            
+            showMessage('جاري الاتصال بالسيرفر...', 'success');
+            
+            // تخزين بيانات السيرفر مؤقتاً
+            const serverData = {
+                url: serverUrl,
+                username: username,
+                password: password,
+                timestamp: new Date().toISOString()
+            };
+            
+            // حفظ في sessionStorage
+            sessionStorage.setItem('current_server', JSON.stringify(serverData));
+            
+            // استخدام API لتحليل M3U
+            try {
+                const response = await fetch('/api/m3u/parse', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(serverData)
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    // حفظ القنوات
+                    sessionStorage.setItem('channels', JSON.stringify(data.channels));
+                    
+                    // الانتقال إلى المشغل
+                    window.location.href = '/player';
+                } else {
+                    showMessage('فشل في جلب القنوات. جاري استخدام الوضع المباشر...', 'error');
+                    setTimeout(() => {
+                        window.location.href = '/player';
+                    }, 1000);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('جاري استخدام الوضع المباشر...', 'error');
+                setTimeout(() => {
+                    window.location.href = '/player';
+                }, 1000);
+            }
+        }
+        
+        // وظائف المساعدة
+        function showMessage(text, type = 'success') {
+            const messageElement = document.getElementById('message');
+            messageElement.textContent = text;
+            messageElement.className = `message ${type}`;
+            messageElement.style.display = 'block';
+            
+            setTimeout(() => {
+                messageElement.style.display = 'none';
+            }, 5000);
+        }
+        
+        function isValidUrl(string) {
+            try {
+                new URL(string);
+                return true;
+            } catch (_) {
+                return false;
+            }
+        }
+        
+        // السماح بالإدخال بالزر Enter
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                connectToServer();
+            }
+        });
+        
+        // التحقق من حالة API عند التحميل
+        window.onload = async function() {
+            try {
+                const response = await fetch('/api/health');
+                if (!response.ok) {
+                    document.querySelector('.status-dot').style.background = 'var(--danger)';
+                    document.querySelector('.api-status span').textContent = 'API Status: Offline';
+                }
+            } catch (error) {
+                document.querySelector('.status-dot').style.background = 'var(--danger)';
+                document.querySelector('.api-status span').textContent = 'API Status: Offline';
+            }
+        };
+    </script>
+</body>
+</html>
